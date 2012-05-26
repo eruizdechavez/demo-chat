@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://' + window.location.hostname + ':' + window.location.port);
 
 var LoginView = Backbone.View.extend({
 	el: '#login',
