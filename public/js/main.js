@@ -30,6 +30,10 @@ var LoginView = Backbone.View.extend({
 		this.$('.nickname-display').text(data.nickname);
 	},
 
+	loginError: function(data) {
+		alert(data.message);
+	},
+
 	logout: function() {
 		socket.emit('logout attempt', {
 			nickname: this.nickname
@@ -60,7 +64,9 @@ var ChatView = Backbone.View.extend({
 	send: function(event) {
 		if (event.keyCode === 13) {
 			var message = $('#message').val();
-			socket.emit('message', {message: message});
+			socket.emit('message', {
+				message: message
+			});
 			$('#message').val('');
 		}
 	},
@@ -77,10 +83,28 @@ var ChatView = Backbone.View.extend({
 
 	message: function(data) {
 		var text = this.$('#log').text();
-
 		this.$('#log').text(text + '\n' + data.nickname + ' : ' + data.message);
+		this.$('#log').scrollTop(this.$('#log')[0].scrollHeight - this.$('#log').height());
+	}
+});
+
+var ContactsView = Backbone.View.extend({
+	el: '#clients',
+
+	initialize: function() {
+		_.bindAll(this);
+		socket.on('clients', this.clients);
+	},
+
+	clients: function(data) {
+		this.$el.empty();
+
+		_.forEach(data.clients, function(item){
+			this.$el.append('<li>' + item.nickname + '</li>');
+		}, this);
 	}
 });
 
 var login = new LoginView();
 var chat = new ChatView();
+var contacts = new ContactsView();

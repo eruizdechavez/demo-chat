@@ -3,7 +3,3 @@
 body {
 	margin-top: 20px;
 }
-
-#chat, .logout-form {
-	display: none;
-}
