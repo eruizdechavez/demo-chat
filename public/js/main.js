@@ -51,6 +51,8 @@ var LoginView = Backbone.View.extend({
 var ChatView = Backbone.View.extend({
 	el: '#chat',
 
+	scroll: 0,
+
 	events: {
 		'keyup #message': 'send'
 	},
@@ -78,14 +80,24 @@ var ChatView = Backbone.View.extend({
 	},
 
 	logoutOk: function() {
-		this.$('#log').val('');
+		this.$('#log').empty();
 		this.$el.hide();
 	},
 
 	message: function(data) {
-		var text = this.$('#log').text();
-		this.$('#log').text(text + '\n' + data.nickname + ' : ' + data.message);
-		this.$('#log').scrollTop(this.$('#log')[0].scrollHeight - this.$('#log').height());
+		var log = this.$('#log'),
+			nickname = $('<div class="span1 nickname"></div>'),
+			message = $('<div class="span8"></div>'),
+			row = $('<div class="row"></div>');
+
+		nickname.text(data.nickname);
+		message.text(data.message);
+		row.append(nickname).append(message);
+		log.append(row);
+
+		this.scroll += $(log.children()[log.children().length - 1]).height();
+
+		log.scrollTop(this.scroll);
 	}
 });
 
@@ -100,7 +112,7 @@ var ContactsView = Backbone.View.extend({
 	clients: function(data) {
 		this.$el.empty();
 
-		_.forEach(data.clients, function(item){
+		_.forEach(data.clients, function(item) {
 			this.$el.append('<li>' + item.nickname + '</li>');
 		}, this);
 	}
