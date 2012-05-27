@@ -11,6 +11,7 @@ var LoginView = Backbone.View.extend({
 
 	initialize: function() {
 		_.bindAll(this);
+
 		socket.on('login ok', this.loginOk);
 		socket.on('login error', this.loginError);
 		socket.on('logout ok', this.logoutOk);

@@ -1,9 +1,5 @@
 @import url('bootstrap.min.css');
 
-body {
-	margin-top: 20px;
-}
-
-.row {
-	margin-bottom: 20px;
+textarea {
+	height: 240px;
 }
