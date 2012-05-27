@@ -6,7 +6,6 @@ var express = require('express'),
 	message = require('./controllers/message_controller');
 
 app.configure(function() {
-	app.set('views', __dirname + '/views');
 	app.use(express.static(__dirname + '/public'));
 });
 
