@@ -5,30 +5,38 @@ var express = require('express'),
 	session = require('./controllers/session_controller'),
 	message = require('./controllers/message_controller');
 
+// Basic express server, only for static content
 app.configure(function() {
 	app.use(express.static(__dirname + '/public'));
 });
 
+// DB Connection for Client list
 mongoose.connect('mongodb://localhost/demo-chat');
 
+// Start Express
 app.listen(3000, function() {
 	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
 
+// Add listeners to the sockets
 io.sockets.on('connection', function(socket) {
 
+	// Handle chat logins
 	socket.on('login attempt', function(data) {
 		session.login(io, socket, data);
 	});
 
+	// handle chat logouts
 	socket.on('logout attempt', function(data) {
 		session.logout(io, socket, data);
 	});
 
+	// Handle messages
 	socket.on('message', function(data) {
 		message.message(io, socket, data);
 	});
 
+	// Handle disconnects
 	socket.on('disconnect', function(data) {
 		session.disconnect(io, socket, data);
 	});
