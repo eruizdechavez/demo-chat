@@ -4,7 +4,8 @@ var express = require('express'),
 	io = require('socket.io').listen(app),
 	mongoose = require('mongoose'),
 	session = require('./controllers/session_controller'),
-	message = require('./controllers/message_controller');
+	message = require('./controllers/message_controller'),
+	ClientModel = require('./models/client_model').ClientModel;
 
 // Basic express server, only for static content
 app.configure(function() {
@@ -15,6 +16,8 @@ app.configure(function() {
 mongoose.connect('mongodb://localhost/demo-chat');
 
 // Start Express
+ClientModel.remove();
+
 app.listen(3000, function() {
 	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
