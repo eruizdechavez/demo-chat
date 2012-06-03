@@ -24,6 +24,8 @@ exports.login = function(io, socket, data) {
 
 		// Duplicated nickname :(
 		if (doc) {
+			console.warn('nickname in use, orphan records?', doc.nickname);
+
 			socket.emit('login error', {
 				message: 'nickname in use'
 			});
