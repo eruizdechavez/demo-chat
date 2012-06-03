@@ -15,9 +15,11 @@ app.configure(function() {
 // DB Connection for Client list
 mongoose.connect('mongodb://localhost/demo-chat');
 
-// Start Express
-ClientModel.remove();
+// Clean previous data
+var clients = new ClientModel();
+clients.collection.drop();
 
+// Start Express
 app.listen(3000, function() {
 	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
