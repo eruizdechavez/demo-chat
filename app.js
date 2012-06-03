@@ -1,3 +1,4 @@
+// Code dependencies
 var express = require('express'),
 	app = module.exports = express.createServer(),
 	io = require('socket.io').listen(app),
