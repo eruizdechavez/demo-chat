@@ -5,6 +5,7 @@
 	"dependencies": {
 		"express": "*",
 		"socket.io": "*",
-		"mongoose": "*"
+		"mongoose": "*",
+		"colors": "*"
 	}
 }

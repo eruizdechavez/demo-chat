@@ -8,6 +8,21 @@ var mongoose = require('mongoose'),
 	message = require('./controllers/message_controller'),
 	ClientModel = require('./models/client_model').ClientModel;
 
+var colors = require('colors');
+
+colors.setTheme({
+  silly: 'rainbow',
+  input: 'grey',
+  verbose: 'cyan',
+  prompt: 'grey',
+  info: 'green',
+  data: 'grey',
+  help: 'cyan',
+  warn: 'yellow',
+  debug: 'blue',
+  error: 'red'
+});
+
 // Basic express server, only for static content
 app.configure(function() {
 	app.use(express.static(__dirname + '/public'));
@@ -21,7 +36,7 @@ var clients = new ClientModel();
 clients.collection.drop();
 
 // Start Express
-console.log("Express server listening on port %d in %s mode", 3000, app.settings.env);
+console.log("Express server listening on port %d in %s mode".verbose, 3000, app.settings.env);
 
 // Add listeners to the sockets
 io.sockets.on('connection', function(socket) {
