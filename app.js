@@ -1,11 +1,27 @@
 // Code dependencies
-var express = require('express'),
-	app = module.exports = express.createServer(),
-	io = require('socket.io').listen(app),
-	mongoose = require('mongoose'),
+var express = require('express');
+var app = express();
+var server = app.listen(3000);
+var io = require('socket.io').listen(server);
+var mongoose = require('mongoose'),
 	session = require('./controllers/session_controller'),
 	message = require('./controllers/message_controller'),
 	ClientModel = require('./models/client_model').ClientModel;
+
+var colors = require('colors');
+
+colors.setTheme({
+  silly: 'rainbow',
+  input: 'grey',
+  verbose: 'cyan',
+  prompt: 'grey',
+  info: 'green',
+  data: 'grey',
+  help: 'cyan',
+  warn: 'yellow',
+  debug: 'blue',
+  error: 'red'
+});
 
 // Basic express server, only for static content
 app.configure(function() {
@@ -20,9 +36,7 @@ var clients = new ClientModel();
 clients.collection.drop();
 
 // Start Express
-app.listen(3000, function() {
-	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-});
+console.log("Express server listening on port %d in %s mode".verbose, 3000, app.settings.env);
 
 // Add listeners to the sockets
 io.sockets.on('connection', function(socket) {
