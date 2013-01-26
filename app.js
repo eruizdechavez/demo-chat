@@ -1,6 +1,6 @@
 // Code dependencies
 var express = require('express');
-var app = express();
+var app = express.createServer();
 var server = app.listen(3000);
 var io = require('socket.io').listen(server);
 var mongoose = require('mongoose'),
