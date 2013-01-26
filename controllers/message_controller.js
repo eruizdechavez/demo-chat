@@ -1,4 +1,5 @@
 var ClientModel = require('../models/client_model').ClientModel;
+var MessageModel = require('../models/message_model').MessageModel;
 
 // Receive and broadcast messages
 exports.message = function(io, socket, data) {
@@ -33,8 +34,12 @@ exports.message = function(io, socket, data) {
 		// Prepare message
 		var message = {
 			nickname: doc.nickname,
-			message: data.message
+			message: data.message,
+			timestamp: Date.now()
 		}
+
+		var log = new MessageModel(message);
+		log.save();
 
 		// Broadcast to the world
 		io.sockets.emit('message', message);
